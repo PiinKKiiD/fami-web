@@ -1,0 +1,92 @@
+<!--<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <div>
+        <div>
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Thêm mới film</h4>
+            </div>
+
+            <div class="modal-body">
+              <form>
+                <div class="form-group">
+                  <label for="filmName">Tên</label>
+                  <input class="form-control" type="text" placeholder="Add FilmName" id="filmName">
+                </div>
+
+                <div class="form-group">
+                  <label for="filmType">Thể loại</label>
+                  <input class="form-control" type="text" placeholder="Add FilmType" id="filmType">
+                </div>
+
+                <div class="form-group">
+                  <label for="filmNote">Ghi chú</label>
+                  <input class="form-control" type="text" placeholder="Add FilmNote" id="filmNote">
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-primary">Thêm</button>
+              <button class="btn btn-primary" data-dismiss="modal">Trở về</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>-->
+<div class="container" style="width : 500px;">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="header" style="text-align: center;">
+        <h4 class="title">Thêm mới film</h4>
+      </div>
+      <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
+        <p class="fullwidth-input">
+          <mat-form-field [style.width.px]=450 appearance="outline">
+            <mat-label>Tên</mat-label>
+            <input matInput
+                   formControlName="filmName"
+                   type="text"
+                   placeholder=" " id="filmName">
+          </mat-form-field>
+        </p>
+        <p class="fullwidth-input">
+          <mat-form-field [style.width.px]=450 appearance="outline">
+            <mat-label>Thể loại</mat-label>
+            <input matInput
+                   formControlName="filmType"
+                   type="text"
+                   placeholder=" " id="filmType">
+          </mat-form-field>
+        </p>
+
+        <p class="fullwidth-input">
+          <mat-form-field [style.width.px]=450 appearance="outline">
+            <mat-label>Ghi chú</mat-label>
+            <input matInput
+                   formControlName="filmNote"
+                   type="text"
+                   placeholder=" " id="filmNote">
+          </mat-form-field>
+        </p>
+
+
+        <div class="footer" style="text-align: center;">
+          <button mat-raised-button class="blue-white-btn"
+                  [disabled]="!addForm.valid"
+                  type="submit"
+                  style="margin-right: 10px;">Thêm</button>
+          <button mat-raised-button class="blue-white-btn"
+                  style="margin-left: 10px; background-color: white; color:#3898EC; border: 1px solid #3898EC;"
+                  type="button"
+                  (click)="onCancel()"
+          >Trở về</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+

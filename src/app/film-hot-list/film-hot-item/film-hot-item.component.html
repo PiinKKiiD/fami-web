@@ -1,0 +1,29 @@
+<div class="row" style="margin-top: 20px;">
+  <div class="col-xs-4">
+    <img [src]= filmhot.avatar alt="" style = "max-height:150px; border-radius: 7px;">
+  </div>
+  <div class="col-xs-6" style="margin-left: 25px;">
+    <h6 style="width: 100px; height: 110px;">{{filmhot.name}}</h6>
+
+
+    <div style="width: 300px; height: 12px; margin-bottom: 20px;">
+      <ul>
+        <li style="display: inline; margin-left: -40px;" *ngIf="getRate()>=1">
+          <img src="assets/images/Star_icon.png" alt="">
+        </li>
+        <li style="display: inline;" *ngIf="getRate()>=2">
+          <img src="assets/images/Star_icon.png" alt="">
+        </li>
+        <li style="display: inline;" *ngIf="getRate()>=3">
+          <img src="assets/images/Star_icon.png" alt="">
+        </li>
+        <li style="display: inline;" *ngIf="getRate()>=4">
+          <img src="assets/images/Star_icon.png" alt="">
+        </li>
+        <li style="display: inline;" *ngIf="getRate()>=5">
+          <img src="assets/images/Star_icon.png" alt="">
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

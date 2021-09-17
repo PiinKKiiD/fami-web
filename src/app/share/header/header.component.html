@@ -1,0 +1,18 @@
+<nav>
+  <lable routerLink="/"
+     class="logo">Fami Film</lable>
+
+  <ul class="nav-right" >
+    <li routerLinkActive="is-active" >
+      <a class="active" [routerLink]="'/phim-moi'">Phim mới</a></li>
+    <li [routerLinkActive]="'is-active'">
+      <a [routerLink]="'/phim-le'">Phim lẻ</a></li>
+    <li routerLinkActive="is-active">
+      <a [routerLink]="'/phim-bo'">Phim bộ</a></li>
+    <li routerLinkActive="is-active">
+      <a [routerLink]="'/phim-hoat-hinh'">Phim Hoạt hình</a></li>
+    <li routerLinkActive="is-active">
+      <a [routerLink]="'/quan-ly'">Quản lý</a></li>
+  </ul>
+</nav>
+

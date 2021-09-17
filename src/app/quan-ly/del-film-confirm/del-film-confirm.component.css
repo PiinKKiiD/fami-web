@@ -1,0 +1,14 @@
+.messagebox{
+  background: #FFFFFF;
+  border-radius: 5px;
+}
+
+h3{
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 28px;
+
+  color: #000000;
+}

@@ -1,0 +1,63 @@
+h3{
+  color: #F1B722;
+}
+
+
+.borderless td, .borderless th {
+  border-left: none;
+  border-right: none;
+}
+
+#btn-Them{
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 21px;
+  /* identical to box height */
+
+
+  color: #FFFFFF;
+}
+
+.demo-table {
+  width: 100%;
+  background-color: #0C2738;
+  border-radius: 5px;
+
+
+}
+
+.demo-button-container {
+  padding-bottom: 16px;
+}
+
+.demo-button + .demo-button {
+  margin-left: 8px;
+}
+
+.label-table{
+  color: white;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 21px;
+  /* identical to box height */
+}
+
+.content-table{
+  font-family: Roboto;
+  font-style: normal;
+  font-size: 18px;
+  line-height: 21px;
+  /* identical to box height */
+
+
+  color: #FFFFFF;
+
+}
+
+.row-table{
+  border: 1px solid #FFFFFF;
+}

@@ -1,0 +1,21 @@
+#tim-kiem{
+  width: 108px;
+  height: 30px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 16px;
+
+  color: #FFFFFF;
+}
+#inputsm{
+  margin-top: 8px;
+  width: 100%;
+  color: black;
+  border-radius: 5px;
+  background-color: white;
+  height: 30px;
+  padding-left: 10px;
+  font-size: 14px;
+}

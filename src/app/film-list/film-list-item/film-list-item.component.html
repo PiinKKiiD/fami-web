@@ -1,0 +1,49 @@
+<div class="container"
+     style="margin: 10px 30px 20px 0px;
+">
+  <div class="row">
+    <img [src]=film.avatar [alt]=film.name style="max-height: 200px; border-radius: 7px; position: relative;">
+    <span style="
+    position: absolute;
+    font-size: 8px; top: 5px; left: 65px;
+    background-color: #F1B722;
+    border-radius: 10px;
+     padding: 0px 9px 0px 9px;">{{film.rate/10}}</span>
+  </div>
+
+  <div style="width: 150px; height: 12px;">
+    <ul>
+      <li style="display: inline; margin-left: -50px;" *ngIf="starts>=1">
+        <img src="assets/images/Star_icon.png" alt="">
+      </li>
+      <li style="display: inline;" *ngIf="getRate(film)>=2">
+        <img src="assets/images/Star_icon.png" alt="">
+      </li>
+      <li style="display: inline;" *ngIf="getRate(film)>=3">
+        <img src="assets/images/Star_icon.png" alt="">
+      </li>
+      <li style="display: inline;" *ngIf="getRate(film)>=4">
+        <img src="assets/images/Star_icon.png" alt="">
+      </li>
+      <li style="display: inline;" *ngIf="getRate(film)>=5">
+        <img src="assets/images/Star_icon.png" alt="">
+      </li>
+    </ul>
+  </div>
+
+  <div class="row">
+    <h6 style="width: 150px; height: 40px;">{{film.name}}</h6>
+  </div>
+  <div style="font-size: 11px; color:#E5E5E5;">
+    <ul>
+      <li style="display: inline;">
+        <img src="assets/images/type_point.png" alt=""
+             style="margin: 0px 7px 0px -50px; max-height: 7px;"
+        ></li>
+      <li style="display: inline;">{{film.type}}</li>
+    </ul>
+
+  </div>
+</div>
+
+

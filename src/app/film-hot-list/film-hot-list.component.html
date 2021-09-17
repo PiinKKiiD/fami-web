@@ -1,0 +1,8 @@
+<div class="row" style="margin-top: 30px;">
+  <h3>Phim hot</h3>
+</div>
+
+<div class="row" *ngFor="let fhot of filmhots$ | async">
+  <app-film-hot-item [filmhot] = fhot ></app-film-hot-item>
+</div>
+

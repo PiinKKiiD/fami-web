@@ -1,0 +1,57 @@
+#fami-film-login{
+  /* FAMI FILM */
+
+
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 28px;
+  text-align: center;
+
+  color: #F1B722;
+  margin-top: 20px;
+}
+
+ul li{
+  display: inline-block;
+  margin-right: 20px;
+}
+
+.blue-white-btn{
+  width: 101px;
+  height: 36px;
+
+  background: #3898EC;
+  border-radius: 5px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 21px;
+  /* identical to box height */
+
+
+  color: #FFFFFF;
+}
+
+#switch-btn{
+  width: 170px;
+}
+
+.form-label{
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 14px;
+  /* identical to box height */
+
+  letter-spacing: -0.075em;
+
+  color: #CECECE;
+}
+
+.input-field{
+  font-size: 15px;
+}

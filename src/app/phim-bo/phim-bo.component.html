@@ -1,0 +1,19 @@
+<app-header></app-header>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <app-searcher></app-searcher>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-9">
+      <app-film-list [filmCategory] = "'Phim bộ'" [films$] = phimbos$></app-film-list>
+    </div>
+
+    <div class="col-xs-3">
+      <app-film-hot-list [filmhots$]="phimhots$"></app-film-hot-list>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

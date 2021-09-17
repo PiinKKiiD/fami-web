@@ -1,0 +1,24 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; background-color:  #081B27 }
+body { margin: 0;
+  font-family: Roboto,
+  "Helvetica Neue", sans-serif;
+  color: white;}
+
+.blue-white-btn{
+  width: 101px;
+  height: 36px;
+
+  background: #3898EC;
+  border-radius: 5px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 21px;
+  /* identical to box height */
+
+
+  color: #FFFFFF;
+}

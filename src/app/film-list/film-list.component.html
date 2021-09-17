@@ -1,0 +1,14 @@
+<div class="container">
+  <div class="row">
+    <h3>{{filmCategory}}</h3>
+  </div>
+
+  <div class="row" style="width: 820px;">
+    <div class="col-xs-2" *ngFor="let f of films$ | async" style="width: 205px;">
+      <app-film-list-item [film] = f></app-film-list-item>
+    </div>
+
+
+  </div>
+
+</div>
