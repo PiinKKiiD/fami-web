@@ -2,11 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PhimHoatHinhComponent } from './phim-hoat-hinh.component';
 import {FilmService} from "../share/film.service";
-import {HttpClient, HttpHandler} from "@angular/common/http";
 import {RouterTestingModule} from "@angular/router/testing";
 import {FilmModel} from "../share/film.model";
 import {Observable, Subject} from "rxjs";
-import {DataStorageService} from "../share/data-storage.service";
 
 
 describe('PhimHoatHinhComponent', () => {
@@ -29,23 +27,18 @@ describe('PhimHoatHinhComponent', () => {
     rate: 9,
     type: 'dump type 2',
   } as FilmModel;
-  const filmlist : FilmModel[] = [film1, film2]
-  let phimhots : FilmModel[] = [film2, film1];
+  const phimlist : FilmModel[] = [film1, film2]
+  const phimhots : FilmModel[] = [film2, film1];
 
   const filmService = {
     filmsChanged: new Subject<FilmModel[]>(),
 
-    getFilmHots(type: string){return phimhots; },
-    getFilms(type: string){
-      return [];
-    }
-  }
-  const datatStorageService ={
-    fetchFilm(type: string): Observable<FilmModel[]>{
-      return new Observable<FilmModel[]>(o =>{
-        o.next(filmlist);
-      })
-    }
+    getPhimHoatHinhHots$(){
+      return new Observable<FilmModel[]>( o => {o.next(phimhots); }); }
+    ,
+    getPhimHoatHinhs$(){
+      return new Observable<FilmModel[]>( o => {o.next(phimlist)} );
+   }
   };
 
 
@@ -57,7 +50,6 @@ describe('PhimHoatHinhComponent', () => {
         set:{
           providers: [
             { provide: FilmService, useValue: filmService},
-            { provide: DataStorageService, useValue: datatStorageService},
           ]}
       })
       .compileComponents();
@@ -66,7 +58,7 @@ describe('PhimHoatHinhComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule],
-      providers: [FilmService, HttpClient, HttpHandler],
+      providers: [FilmService],
       declarations: [ PhimHoatHinhComponent ]
     })
     .compileComponents();
@@ -83,15 +75,19 @@ describe('PhimHoatHinhComponent', () => {
   });
 
   it('should return a film list',()=>{
-    component.onGetFilmHots();
+    component.ngOnInit();
     fixture.detectChanges();
-    expect(component.onGetFilmHots()).toEqual(phimhots);
+    let films = [];
+    component.phimhots$.subscribe(fs =>{ films = fs });
+    expect(films).toEqual(phimhots);
   });
 
   it('should return filmlist onInit', ()=>{
     component.ngOnInit();
     fixture.detectChanges();
-    expect(component.phimhoathinhs).toEqual(filmlist)
+    let films = [];
+    component.phimhoathinhs$.subscribe(fs =>{ films = fs });
+    expect(films).toEqual(phimlist);
   });
 
 });

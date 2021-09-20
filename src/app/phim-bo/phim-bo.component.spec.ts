@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PhimBoComponent } from './phim-bo.component';
 import {FilmService} from "../share/film.service";
-import {DataStorageService} from "../share/data-storage.service";
 import {RouterTestingModule} from "@angular/router/testing";
 import {Observable, Subject} from "rxjs";
 import {FilmModel} from "../share/film.model";
@@ -27,24 +26,18 @@ describe('PhimBoComponent', () => {
     rate: 9,
     type: 'dump type 2',
   } as FilmModel;
-  const filmlist : FilmModel[] = [film1, film2]
-  let phimhots : FilmModel[] = [film2, film1];
+  const phimlist : FilmModel[] = [film1, film2]
+  const phimhots : FilmModel[] = [film2, film1];
 
   const filmService = {
     filmsChanged: new Subject<FilmModel[]>(),
 
-    getFilmHots(type: string){return phimhots; }
+    getPhimBoHots$(){
+      return new Observable<FilmModel[]>( o => {o.next(phimhots); }); }
     ,
-    getFilms(type: string){
-      return [];
+    getPhimBos$(){
+      return new Observable<FilmModel[]>( o => {o.next(phimlist)} );
    }
-  }
-  const datatStorageService ={
-    fetchFilm(type: string): Observable<FilmModel[]>{
-      return new Observable<FilmModel[]>(o =>{
-        o.next(filmlist);
-      })
-  }
   };
 
 
@@ -56,7 +49,6 @@ describe('PhimBoComponent', () => {
         set:{
           providers: [
             { provide: FilmService, useValue: filmService},
-            { provide: DataStorageService, useValue: datatStorageService},
           ]}
       })
     .compileComponents();
@@ -73,15 +65,19 @@ describe('PhimBoComponent', () => {
   });
 
   it('should return a film list',()=>{
-    component.onGetFilmHots();
+    component.ngOnInit();
     fixture.detectChanges();
-    expect(component.onGetFilmHots()).toEqual(phimhots);
+    let films = [];
+    component.phimhots$.subscribe(fs =>{ films = fs });
+    expect(films).toEqual(phimhots);
   });
 
   it('should return filmlist onInit', ()=>{
     component.ngOnInit();
     fixture.detectChanges();
-    expect(component.phimbos).toEqual(filmlist)
+    let films = [];
+    component.phimbos$.subscribe(fs =>{ films = fs });
+    expect(films).toEqual(phimlist);
   });
 });
 

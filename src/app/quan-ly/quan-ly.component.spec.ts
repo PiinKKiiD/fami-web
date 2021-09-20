@@ -7,7 +7,6 @@ import {MatDialog, MatDialogModule} from "@angular/material/dialog";
 import {Overlay} from "@angular/cdk/overlay";
 import {FilmModel} from "../share/film.model";
 import {Observable, of, Subject} from "rxjs";
-import {DataStorageService} from "../share/data-storage.service";
 
 describe('QuanLyComponent', () => {
   let component: QuanLyComponent;
@@ -28,23 +27,17 @@ describe('QuanLyComponent', () => {
     rate: 9,
     type: 'dump type 2',
   } as FilmModel;
-  const filmlist : FilmModel[] = [film1, film2]
-  let phimhots : FilmModel[] = [film2, film1];
+  const phimlist : FilmModel[] = [film1, film2]
+  const phimhots : FilmModel[] = [film2, film1];
 
   const filmService = {
     filmsChanged: new Subject<FilmModel[]>(),
 
-    getFilmHots(type: string){return phimhots; }
-    ,
-    getFilms(type: string){
-      return [];
-    }
-  }
-  const datatStorageService ={
-    fetchFilm(type: string): Observable<FilmModel[]>{
-      return new Observable<FilmModel[]>(o =>{
-        o.next(filmlist);
-      })
+    getQuanLys$(){
+      return new Observable<FilmModel[]>( o => {o.next(phimhots); }); },
+
+    getQuanLys(){
+      return phimlist;
     }
   };
 
@@ -77,8 +70,7 @@ describe('QuanLyComponent', () => {
         set:{
           providers: [
             { provide: FilmService, useValue: filmService},
-            {provide: MatDialog, useValue: dialogStub},
-            { provide: DataStorageService, useValue: datatStorageService},
+            {provide: MatDialog, useValue: dialogStub}
           ]}
       })
       .compileComponents();
@@ -98,7 +90,8 @@ describe('QuanLyComponent', () => {
   it('should return filmlist onInit', ()=>{
     component.ngOnInit();
     fixture.detectChanges();
-    expect(component.quanlys).toEqual(filmlist)
+    filmService.filmsChanged.next(phimlist);
+    expect(component.quanlys).toEqual(phimlist);
   });
 
 });

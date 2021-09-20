@@ -12,8 +12,7 @@ export class PhimMoiComponent implements OnInit {
   phimmois$ : Observable<FilmModel[]>;
   phimhots$ : Observable<FilmModel[]>;
   subscription: Subscription;
-  constructor(private filmService : FilmService,
-              private dataStorageService: DataStorageService) { }
+  constructor(private filmService : FilmService) { }
 
   ngOnInit(): void {
     this.getPhimMois$();

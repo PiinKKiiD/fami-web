@@ -2,11 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PhimMoiComponent } from './phim-moi.component';
 import {FilmService} from "../share/film.service";
-import {HttpClient, HttpHandler} from "@angular/common/http";
 import {RouterTestingModule} from "@angular/router/testing";
 import {FilmModel} from "../share/film.model";
 import {Observable, Subject} from "rxjs";
-import {DataStorageService} from "../share/data-storage.service";
 
 describe('PhimMoiComponent', () => {
   let component: PhimMoiComponent;
@@ -28,24 +26,18 @@ describe('PhimMoiComponent', () => {
     rate: 9,
     type: 'dump type 2',
   } as FilmModel;
-  const filmlist : FilmModel[] = [film1, film2]
-  let phimhots : FilmModel[] = [film2, film1];
+  const phimlist : FilmModel[] = [film1, film2]
+  const phimhots : FilmModel[] = [film2, film1];
 
   const filmService = {
     filmsChanged: new Subject<FilmModel[]>(),
 
-    getFilmHots(type: string){return phimhots; }
+    getPhimMoiHots$(){
+      return new Observable<FilmModel[]>( o => {o.next(phimhots); }); }
     ,
-    getFilms(type: string){
-      return [];
-    }
-  }
-  const datatStorageService ={
-    fetchFilm(type: string): Observable<FilmModel[]>{
-      return new Observable<FilmModel[]>(o =>{
-        o.next(filmlist);
-      })
-    }
+    getPhimMois$(){
+      return new Observable<FilmModel[]>( o => {o.next(phimlist)} );
+   }
   };
 
 
@@ -57,7 +49,6 @@ describe('PhimMoiComponent', () => {
         set:{
           providers: [
             { provide: FilmService, useValue: filmService},
-            { provide: DataStorageService, useValue: datatStorageService},
           ]}
       })
       .compileComponents();
@@ -67,7 +58,7 @@ describe('PhimMoiComponent', () => {
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule],
       declarations: [ PhimMoiComponent ],
-      providers: [FilmService, HttpClient, HttpHandler],
+      providers: [FilmService],
     })
     .compileComponents();
   });
@@ -83,15 +74,19 @@ describe('PhimMoiComponent', () => {
   });
 
   it('should return a film list',()=>{
-    component.onGetFilmHots();
+    component.ngOnInit();
     fixture.detectChanges();
-    expect(component.onGetFilmHots()).toEqual(phimhots);
+    let films = [];
+    component.phimhots$.subscribe(fs =>{ films = fs });
+    expect(films).toEqual(phimhots);
   });
 
   it('should return filmlist onInit', ()=>{
     component.ngOnInit();
     fixture.detectChanges();
-    expect(component.phimmois).toEqual(filmlist)
+    let films = [];
+    component.phimmois$.subscribe(fs =>{ films = fs });
+    expect(films).toEqual(phimlist);
   });
 
 });

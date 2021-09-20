@@ -2,12 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PhimLeComponent } from './phim-le.component';
 import {FilmService} from "../share/film.service";
-import {HttpClient, HttpHandler} from "@angular/common/http";
 import {RouterTestingModule} from "@angular/router/testing";
 import {FilmModel} from "../share/film.model";
 import {Observable, Subject} from "rxjs";
-import {PhimBoComponent} from "../phim-bo/phim-bo.component";
-import {DataStorageService} from "../share/data-storage.service";
 
 
 describe('PhimLeComponent', () => {
@@ -30,24 +27,18 @@ describe('PhimLeComponent', () => {
     rate: 9,
     type: 'dump type 2',
   } as FilmModel;
-  const filmlist : FilmModel[] = [film1, film2]
-  let phimhots : FilmModel[] = [film2, film1];
+  const phimlist : FilmModel[] = [film1, film2]
+  const phimhots : FilmModel[] = [film2, film1];
 
   const filmService = {
     filmsChanged: new Subject<FilmModel[]>(),
 
-    getFilmHots(type: string){return phimhots; }
+    getPhimLeHots$(){
+      return new Observable<FilmModel[]>( o => {o.next(phimhots); }); }
     ,
-    getFilms(type: string){
-      return [];
-    }
-  }
-  const datatStorageService ={
-    fetchFilm(type: string): Observable<FilmModel[]>{
-      return new Observable<FilmModel[]>(o =>{
-        o.next(filmlist);
-      })
-    }
+    getPhimLes$(){
+      return new Observable<FilmModel[]>( o => {o.next(phimlist)} );
+   }
   };
 
 
@@ -59,7 +50,6 @@ describe('PhimLeComponent', () => {
         set:{
           providers: [
             { provide: FilmService, useValue: filmService},
-            { provide: DataStorageService, useValue: datatStorageService},
           ]}
       })
       .compileComponents();
@@ -76,15 +66,19 @@ describe('PhimLeComponent', () => {
   });
 
   it('should return a film list',()=>{
-    component.onGetFilmHots();
+    component.ngOnInit();
     fixture.detectChanges();
-    expect(component.onGetFilmHots()).toEqual(phimhots);
+    let films = [];
+    component.phimhots$.subscribe(fs =>{ films = fs });
+    expect(films).toEqual(phimhots);
   });
 
   it('should return filmlist onInit', ()=>{
     component.ngOnInit();
     fixture.detectChanges();
-    expect(component.phimles).toEqual(filmlist)
+    let films = [];
+    component.phimles$.subscribe(fs =>{ films = fs });
+    expect(films).toEqual(phimlist);
   });
 
 });
