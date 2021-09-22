@@ -16,7 +16,7 @@ export class QuanLyComponent implements OnInit, OnDestroy {
   displayedColumns = ['id','name', 'type', 'createDate', 'rate', 'note', 'acts']
   quanlys : FilmModel[] = [];
   subscription: Subscription;
-  //tempSup: Subscription;
+  tempSup: Subscription;
   id : number;
   constructor(private filmService : FilmService,
               private matDialog: MatDialog) {
@@ -24,7 +24,7 @@ export class QuanLyComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    //this.tempSup = this.filmService.getQuanLys$().subscribe();
+    this.tempSup = this.filmService.getQuanLys$().subscribe();
     this.subscription = this.filmService.filmsChanged.subscribe(
       qlys =>{
         console.log('films is changed', qlys);
@@ -65,7 +65,7 @@ export class QuanLyComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(){
     this.subscription.unsubscribe();
-    //this.tempSup.unsubscribe();
+    this.tempSup.unsubscribe();
   }
 
 }

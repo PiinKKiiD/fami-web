@@ -1,27 +1,28 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { DebugElement } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 
 import { FilmHotListComponent } from './film-hot-list.component';
 
 describe('FilmHotListComponent', () => {
   let component: FilmHotListComponent;
   let fixture: ComponentFixture<FilmHotListComponent>;
-
-
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  let el: DebugElement;
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
       declarations: [ FilmHotListComponent ]
     })
-    .compileComponents();
-  });
+    .compileComponents()
+    .then(()=>{
+      fixture = TestBed.createComponent(FilmHotListComponent);
+      component = fixture.componentInstance;
+      el = fixture.debugElement;
+    });
+  }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(FilmHotListComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
 });

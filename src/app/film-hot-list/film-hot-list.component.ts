@@ -10,7 +10,6 @@ import {Observable} from "rxjs";
 export class FilmHotListComponent implements OnInit {
 
   constructor() { }
-  @Input() filmhots: FilmModel[] = [];
   @Input() filmhots$: Observable<FilmModel[]>;
   ngOnInit(): void {
   }
