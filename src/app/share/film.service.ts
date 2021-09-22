@@ -1,16 +1,16 @@
 import {FilmModel} from "./film.model";
-import {Observable, Subject} from "rxjs";
+import { Subject} from "rxjs";
 import {Injectable} from "@angular/core";
-import {HttpClient, HttpParams} from "@angular/common/http";
-import { map, take, tap, filter} from 'rxjs/operators';
-
+import {HttpClient} from "@angular/common/http";
+import { map, tap} from 'rxjs/operators';
+import { environment } from "src/environments/environment";
 @Injectable()
 export class FilmService{
   quanlys : FilmModel[] = [];
   constructor(private http: HttpClient) {
   }
 
-  private firebaseStoragePath = 'https://fami-film-default-rtdb.asia-southeast1.firebasedatabase.app/';
+  private firebaseStoragePath = environment.firebaseBaseUrl;
 
   filmsChanged = new Subject<FilmModel[]>();
 

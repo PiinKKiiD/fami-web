@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {FilmModel} from "../share/film.model";
 import {Observable, range, Subscription} from "rxjs";
 import {FilmService} from "../share/film.service";
-import {DataStorageService} from "../share/data-storage.service";
 @Component({
   selector: 'app-phim-moi',
   templateUrl: './phim-moi.component.html',
