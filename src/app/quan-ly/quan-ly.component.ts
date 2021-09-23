@@ -19,7 +19,7 @@ export class QuanLyComponent implements OnInit, OnDestroy {
   tempSup: Subscription;
   id : number;
   constructor(private filmService : FilmService,
-              private matDialog: MatDialog) {
+              public matDialog: MatDialog) {
 
   }
 

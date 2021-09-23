@@ -3,8 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { QuanLyComponent } from './quan-ly.component';
 import {FilmService} from "../share/film.service";
 import {RouterTestingModule} from "@angular/router/testing";
-import {MatDialog, MatDialogModule} from "@angular/material/dialog";
-import {Overlay} from "@angular/cdk/overlay";
+import {MatDialog} from "@angular/material/dialog";
 import {FilmModel} from "../share/film.model";
 import {Observable, of, Subject} from "rxjs";
 
@@ -34,6 +33,7 @@ describe('QuanLyComponent', () => {
     filmsChanged: new Subject<FilmModel[]>(),
 
     getQuanLys$(){
+      this.filmsChanged.next(phimlist);
       return new Observable<FilmModel[]>( o => {o.next(phimhots); }); },
 
     getQuanLys(){
@@ -50,10 +50,10 @@ describe('QuanLyComponent', () => {
     close() {
       return of(false);
     },
-    users: new Observable<FilmModel[]>(o => {
+    films: new Observable<FilmModel[]>(o => {
       o.next(null);
     }),
-    flag: Boolean(o => {
+    isOpen: new Observable<boolean>(o=>{
       o.next(true);
     })
   };
@@ -90,8 +90,9 @@ describe('QuanLyComponent', () => {
   it('should return filmlist onInit', ()=>{
     component.ngOnInit();
     fixture.detectChanges();
-    filmService.filmsChanged.next(phimlist);
+    //filmService.filmsChanged.next(phimlist);
     expect(component.quanlys).toEqual(phimlist);
   });
+
 
 });

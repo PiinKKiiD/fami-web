@@ -23,7 +23,7 @@ export class DelFilmConfirmComponent implements OnInit {
   }
 
   onDelete(){
-    this.filmService.delFilmFromQuanLy(this.index);
+    this.filmService.delFilmFromQuanLy(this.index).subscribe();
     console.log('deleting ', this.index);
     this.dialogRef.close();
   }

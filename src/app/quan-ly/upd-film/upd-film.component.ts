@@ -28,7 +28,7 @@ export class UpdFilmComponent implements OnInit {
     newFilm.name = this.addForm.value['filmName'];
     newFilm.type = this.addForm.value['filmType'];
     newFilm.note = this.addForm.value['filmNote'];
-    this.filmService.updateFilmToQuanLy(newFilm, this.index);
+    this.filmService.updateFilmToQuanLy(newFilm, this.index).subscribe();
     this.dialogRef.close();
   }
   onCancel(){
