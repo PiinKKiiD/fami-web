@@ -6,6 +6,7 @@ import {RouterTestingModule} from "@angular/router/testing";
 import {MatDialog} from "@angular/material/dialog";
 import {FilmModel} from "../share/film.model";
 import {Observable, of, Subject} from "rxjs";
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('QuanLyComponent', () => {
   let component: QuanLyComponent;
@@ -63,15 +64,18 @@ describe('QuanLyComponent', () => {
   };
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
+    return await TestBed.configureTestingModule({
       imports: [RouterTestingModule],
-      declarations: [ QuanLyComponent ]}).overrideComponent(QuanLyComponent,
+      declarations: [QuanLyComponent],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).overrideComponent(QuanLyComponent,
       {
-        set:{
+        set: {
           providers: [
-            { provide: FilmService, useValue: filmService},
-            {provide: MatDialog, useValue: dialogStub}
-          ]}
+            { provide: FilmService, useValue: filmService },
+            { provide: MatDialog, useValue: dialogStub }
+          ]
+        }
       })
       .compileComponents();
   });
