@@ -3,7 +3,6 @@ import {AuthResponseData, AuthService} from "./auth.service";
 import {Router} from "@angular/router";
 import {NgForm} from "@angular/forms";
 import {Observable, Subscription} from "rxjs";
-import {PlaceholderDirective} from "../share/Placeholder/placeholder.directive";
 
 
 @Component({
@@ -15,7 +14,6 @@ export class AuthComponent implements OnDestroy{
   isLoginMode = true;
   isLoading= false;
   error: string= null;
-  @ViewChild(PlaceholderDirective, {static: false}) alertHost: PlaceholderDirective;
 
   private closeSub: Subscription;
 
@@ -29,6 +27,7 @@ export class AuthComponent implements OnDestroy{
   }
   onSubmit(authForm: NgForm){
     if(!authForm.valid){
+      console.log('check valid 2');
       return;
     }
     const email = authForm.value.email;
@@ -41,7 +40,7 @@ export class AuthComponent implements OnDestroy{
     else{
       authObs =  this.authService.signup(email,password);
     }
-    authObs.subscribe(resData =>{
+    this.closeSub = authObs.subscribe(resData =>{
       console.log('...',resData);
       this.isLoading = false;
       this.router.navigate(['/phim-moi']);
@@ -49,7 +48,6 @@ export class AuthComponent implements OnDestroy{
       console.log(erMessage);
       this.isLoading = false;
       this.error= erMessage;
-
     });
     authForm.reset()
   }

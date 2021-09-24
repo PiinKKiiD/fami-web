@@ -1,11 +1,11 @@
 import { AuthResponseData, AuthService } from "./auth.service";
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import { TestBed } from "@angular/core/testing";
+import { fakeAsync, flush, TestBed} from "@angular/core/testing";
 import { environment } from "src/environments/environment";
 import { Router } from "@angular/router";
 import { User } from "./user.model";
 
-fdescribe('Auth Service', ()=>{
+describe('Auth Service', ()=>{
   let authService: AuthService;
   let httpTestingController: HttpTestingController;
   const router = {
@@ -30,7 +30,8 @@ fdescribe('Auth Service', ()=>{
     email,
     userId,
     token,
-    new Date(new Date().getTime() + expiresIn*1000));
+    new Date(new Date().getTime() + expiresIn*1000)
+  );
 
     const mockErrorResponse = { status: 400, statusText: 'Bad Request' };
     const dataErr = 'Invalid request parameters';
@@ -89,17 +90,34 @@ fdescribe('Auth Service', ()=>{
 
   });
 
-  xdescribe('handle autoLogin autoLogout', () => {
-    it('should create new User along with new expireIn when localUser existing ',()=>{
+  describe('handle autoLogin autoLogout', () => {
+    it('should create new User along with new expireIn when localStorage contains an user ',()=>{
+      //create data for localStrage
+      localStorage.setItem('userData',JSON.stringify(dumpUser));
       authService.autoLogin();
+      authService.user.subscribe(newUser => {
+        expect(newUser).not.toBe(dumpUser);
+      })
     });
     it('should not create new user when the localUser is null',() => {
-
+      localStorage.removeItem('userData');
+      authService.autoLogin();
+      authService.user.subscribe(newUser => {
+        console.log(newUser);
+        expect(newUser).toBeNull();
+      })
     });
 
-    it('should logout when the expiresIn is empty', () =>{
+    it('should logout when the expiresIn is empty', fakeAsync(() =>{
+      authService.user.next(dumpUser);
+      console.log('expect run this first');
+      authService.autoLogout(1000);
+      flush();
+      console.log('expect run this 2nd');
+      expect(router.navigate).toHaveBeenCalledWith(['/auth']);
+      authService.user.subscribe(user => {expect(user).toBeNull()});
+      console.log('expect run this 3rd');
+    }));
 
-    });
-
+  });
 });
-
