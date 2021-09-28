@@ -66,6 +66,7 @@ describe('AuthComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AuthComponent);
     component = fixture.componentInstance;
+    router.navigate.calls.reset();
     fixture.detectChanges();
     el = fixture.debugElement;
   });
