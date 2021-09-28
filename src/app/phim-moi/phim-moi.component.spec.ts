@@ -5,6 +5,8 @@ import {FilmService} from "../share/film.service";
 import {RouterTestingModule} from "@angular/router/testing";
 import {FilmModel} from "../share/film.model";
 import {Observable, Subject} from "rxjs";
+import { AppModule } from '../app.module';
+import { ShareModule } from '../share/share.module';
 
 describe('PhimMoiComponent', () => {
   let component: PhimMoiComponent;
@@ -43,7 +45,7 @@ describe('PhimMoiComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
+      imports: [ShareModule, AppModule],
       declarations: [ PhimMoiComponent ]}).overrideComponent(PhimMoiComponent,
       {
         set:{

@@ -9,23 +9,23 @@ import {FilmModel} from "../../share/film.model";
 export class FilmListItemComponent implements OnInit {
 
   constructor() { }
-  @Input() film : FilmModel = new FilmModel('','',new Date(),'',0, '');
-  starts =0;
+  @Input() film : FilmModel;
   ngOnInit(): void {
 
   }
-  getRate(film: FilmModel){
+  getRate(){
+    let starts = 0;
     if(this.film.rate/10 <= 2)
-      this.starts =1;
+      starts =1;
     else if( this.film.rate/10 <= 4 && this.film.rate/10 > 2)
-      this.starts =2;
+      starts =2;
     else if( this.film.rate/10 <= 6 && this.film.rate/10 > 4)
-      this.starts =3;
+      starts =3;
     else if( this.film.rate/10 <= 8 && this.film.rate/10 > 6)
-      this.starts =4;
+      starts =4;
     else
-      this.starts =5;
-    return this.starts;
+      starts =5;
+    return starts;
   }
 
 }

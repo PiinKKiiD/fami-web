@@ -92,7 +92,7 @@ describe('AuthComponent', () => {
 
   describe('check onSubmit form', () =>{
 
-    it('should navigate email when user in isLogin mode with valid form', ()=>{
+    it('should navigate when user in isLogin mode with valid form', ()=>{
       let testForm = <NgForm>{
         value: {
             email: "Hello@gmail.com",
@@ -188,6 +188,8 @@ describe('AuthComponent', () => {
         expect(component.onSwitchMode).toHaveBeenCalled();
       });
     }));
+
+
 
   });
 })

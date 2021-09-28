@@ -11,9 +11,9 @@ export class FilmListComponent implements OnInit {
 
   constructor() { }
   @Input() filmCategory = "Phim bộ mới";
-  @Input() films: FilmModel[] = [];
   @Input() films$: Observable<FilmModel[]>;
   ngOnInit(): void {
+    this.filmCategory = "Phim bộ mới";
   }
 
 }

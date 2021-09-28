@@ -84,7 +84,7 @@ export class AuthService{
   autoLogout(expirationDuration: number){
     this.tokenExpirationTimer = setTimeout(()=>{
       this.logout();
-      console.log('expect run this 222');
+      console.log('expect run this 222', expirationDuration);
     }, expirationDuration);
 
   }
@@ -115,7 +115,7 @@ export class AuthService{
     localStorage.setItem('userData',JSON.stringify(user));
   }
 
-  private handleError(errorRes: HttpErrorResponse){
+  public handleError(errorRes: HttpErrorResponse){
     let erMessage = 'An error occured!';
     if(!errorRes.error || !errorRes.error.error){
       return throwError(erMessage);

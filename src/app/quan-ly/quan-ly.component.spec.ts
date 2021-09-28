@@ -2,11 +2,13 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QuanLyComponent } from './quan-ly.component';
 import {FilmService} from "../share/film.service";
-import {RouterTestingModule} from "@angular/router/testing";
 import {MatDialog} from "@angular/material/dialog";
 import {FilmModel} from "../share/film.model";
 import {Observable, of, Subject} from "rxjs";
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ShareModule } from '../share/share.module';
+import { AppModule } from '../app.module';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { QuanLyModule } from './quan-ly.module';
 
 describe('QuanLyComponent', () => {
   let component: QuanLyComponent;
@@ -65,9 +67,9 @@ describe('QuanLyComponent', () => {
 
   beforeEach(async () => {
     return await TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
+      imports: [ShareModule, AppModule, MatFormFieldModule, QuanLyModule],
       declarations: [QuanLyComponent],
-      schemas: [NO_ERRORS_SCHEMA],
+      //schemas: [NO_ERRORS_SCHEMA],
     }).overrideComponent(QuanLyComponent,
       {
         set: {
@@ -96,6 +98,24 @@ describe('QuanLyComponent', () => {
     fixture.detectChanges();
     //filmService.filmsChanged.next(phimlist);
     expect(component.quanlys).toEqual(phimlist);
+  });
+
+  it('should call matDialog.open when onAdd trigger', () => {
+    spyOn(component.matDialog, 'open')
+    component.onAdd();
+    expect(component.matDialog.open).toHaveBeenCalled();
+  });
+
+  it('should call matDialog.open when onUpdate trigger', () => {
+    spyOn(component.matDialog, 'open')
+    component.onUpdate(1);
+    expect(component.matDialog.open).toHaveBeenCalled();
+  });
+
+  it('should call matDialog.open when onDel trigger', () => {
+    spyOn(component.matDialog, 'open')
+    component.onDel(1);
+    expect(component.matDialog.open).toHaveBeenCalled();
   });
 
 

@@ -14,7 +14,7 @@ export class UpdFilmComponent implements OnInit {
   index: number;
   constructor(public dialogRef: MatDialogRef<UpdFilmComponent>,
               @Inject(MAT_DIALOG_DATA) public data: number,
-              private filmService: FilmService) {
+              public filmService: FilmService) {
     this.index = data['index'];
   }
 
@@ -31,6 +31,7 @@ export class UpdFilmComponent implements OnInit {
     this.filmService.updateFilmToQuanLy(newFilm, this.index).subscribe();
     this.dialogRef.close();
   }
+
   onCancel(){
     this.addForm.reset();
     this.dialogRef.close();

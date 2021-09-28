@@ -1,12 +1,12 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
+import { ComponentFixture, fakeAsync, flush, TestBed } from '@angular/core/testing';
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {FilmService} from "../../share/film.service";
-import {RouterTestingModule} from "@angular/router/testing";
 import {DelFilmConfirmComponent} from "./del-film-confirm.component";
 import { FilmModel } from 'src/app/share/film.model';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { QuanLyModule } from '../quan-ly.module';
 
-describe('AddDialogComponent', () => {
+describe('DelFilmDialogComponent', () => {
   let component: DelFilmConfirmComponent;
   let fixture: ComponentFixture<DelFilmConfirmComponent>;
   const mockDialogRef = {
@@ -15,6 +15,9 @@ describe('AddDialogComponent', () => {
 
   const filmService = {
     filmsChanged: new Subject<FilmModel[]>(),
+    delFilmFromQuanLy(id: number){
+      return new Observable<any>( o => {o.next('deleting')});
+    }
 
     // getPhimLeHots$(){
     //   return new Observable<FilmModel[]>( o => {o.next(phimhots); }); }
@@ -25,7 +28,7 @@ describe('AddDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MatDialogModule, RouterTestingModule],
+      imports: [QuanLyModule],
       providers: [{
         provide: MatDialogRef,
         useValue: mockDialogRef
@@ -46,6 +49,17 @@ describe('AddDialogComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should call dialofRef.close() when onCancel is trggered', () => {
+    component.onCancel();
+    expect(component.dialogRef.close).toHaveBeenCalled();
+  });
+
+  it('should call filmService.DelFilmFromQuanLy(this.index) when onSubmit is triggered', fakeAsync(() => {
+    component.onDelete();
+    flush();
+    expect(component.dialogRef.close).toHaveBeenCalled();
+  }))
 
 
 

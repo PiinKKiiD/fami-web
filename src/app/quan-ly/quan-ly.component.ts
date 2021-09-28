@@ -32,9 +32,9 @@ export class QuanLyComponent implements OnInit, OnDestroy {
     console.log('after fetching data:',this.quanlys);
   }
 
-  public getQuanLys(){
-    this.quanlys = this.filmService.getQuanLys();
-  }
+  // public getQuanLys(){
+  //   this.quanlys = this.filmService.getQuanLys();
+  // }
 
 
   onAdd(){

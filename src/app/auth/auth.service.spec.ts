@@ -1,9 +1,12 @@
 import { AuthResponseData, AuthService } from "./auth.service";
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import { fakeAsync, flush, TestBed} from "@angular/core/testing";
+import { fakeAsync, flush, TestBed, tick} from "@angular/core/testing";
 import { environment } from "src/environments/environment";
 import { Router } from "@angular/router";
 import { User } from "./user.model";
+import { HttpErrorResponse } from "@angular/common/http";
+import { of } from "rxjs";
+import { catchError } from "rxjs/operators";
 
 describe('Auth Service', ()=>{
   let authService: AuthService;
@@ -33,8 +36,27 @@ describe('Auth Service', ()=>{
     new Date(new Date().getTime() + expiresIn*1000)
   );
 
-    const mockErrorResponse = { status: 400, statusText: 'Bad Request' };
-    const dataErr = 'Invalid request parameters';
+    const mockErrorResponse1 = { error :{
+      error : {message : 'EMAIL_EXISTS'}}
+    } as HttpErrorResponse;
+
+    const mockErrorResponse2 = { error :{
+      error : {message : 'EMAIL_NOT_FOUND'}}
+    } as HttpErrorResponse;
+
+    const mockErrorResponse3 = { error :{
+      error : {message : 'USER_DISABLED'}}
+    } as HttpErrorResponse;
+
+    const mockErrorResponse4 = { error :{
+      error : {message : 'INVALID_PASSWORD'}}
+    } as HttpErrorResponse;
+
+    const mockErrorResponse5 = { error :{
+      error : {message : 'UNKNOWN_ERROR'}}
+    } as HttpErrorResponse;
+
+
   /////////////////////////
 
 
@@ -115,9 +137,60 @@ describe('Auth Service', ()=>{
       flush();
       console.log('expect run this 2nd');
       expect(router.navigate).toHaveBeenCalledWith(['/auth']);
-      authService.user.subscribe(user => {expect(user).toBeNull()});
+      const tempSub = authService.user.subscribe(user => {expect(user).toBeNull()});
+      flush();
+      tempSub.unsubscribe();
       console.log('expect run this 3rd');
     }));
 
   });
+
+  describe('handleError',() => {
+    it('should returns <The email address is already in use by another account.> when error1 passed', fakeAsync(() => {
+      let err = authService.handleError(mockErrorResponse1).pipe(catchError(a=> of(a)));
+      err.subscribe((er: string) =>{
+        console.log('error thrown:',er);
+        expect(er).toBe('The email address is already in use by another account.')
+      })
+      flush();
+
+    }));
+
+    it('should returns <There is no user record corresponding to this identifier. The user may have been deleted.> when error2 passed', fakeAsync(() => {
+      let err = authService.handleError(mockErrorResponse2).pipe(catchError(a=> of(a)));
+      err.subscribe((er: string) =>{
+        console.log('error thrown:',er);
+        expect(er).toBe('There is no user record corresponding to this identifier. The user may have been deleted.')
+      })
+      flush();
+    }));
+
+    it('should returns <The user account has been disabled by an administrator.> when error3 passed', fakeAsync(() => {
+      let err = authService.handleError(mockErrorResponse3).pipe(catchError(a=> of(a)));
+      err.subscribe((er: string) =>{
+        console.log('error thrown:',er);
+        expect(er).toBe('The user account has been disabled by an administrator.')
+      })
+      flush();
+    }));
+
+    it('should returns <The password is invalid or the user does not have a password.> when error4 passed', fakeAsync(() => {
+      let err = authService.handleError(mockErrorResponse4).pipe(catchError(a=> of(a)));
+      err.subscribe((er: string) =>{
+        console.log('error thrown:',er);
+        expect(er).toBe('The password is invalid or the user does not have a password.')
+      })
+      flush();
+    }));
+
+    it('should returns <UNKNOWN_ERROR> when error5 passed', fakeAsync(() => {
+      let err = authService.handleError(mockErrorResponse5).pipe(catchError(a=> of(a)));
+      err.subscribe((er: string) =>{
+        console.log('error thrown:',er);
+        expect(er).toBe('UNKNOWN_ERROR')
+      })
+      flush();
+    }));
+
+  })
 });
