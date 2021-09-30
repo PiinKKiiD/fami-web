@@ -22,7 +22,7 @@ export class AppInterceptorService implements HttpInterceptor{
   }
 
   handleError(error: HttpErrorResponse){
-    console.log('error occurred');
+    console.log('error occurred', error);
     return throwError(error);
   }
 

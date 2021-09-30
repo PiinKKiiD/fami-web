@@ -6,7 +6,7 @@ import { PhimLeComponent} from "./phim-le/phim-le.component";
 import {PhimHoatHinhComponent} from "./phim-hoat-hinh/phim-hoat-hinh.component";
 import {AuthGuard} from "./auth/auth.guard";
 
-const routes: Routes = [
+export const routes: Routes = [
   {path: '', redirectTo: '/phim-moi', pathMatch: 'full'},
   { path: 'phim-moi', component: PhimMoiComponent, canActivate: [AuthGuard] },
   { path: 'phim-le', component: PhimLeComponent, canActivate: [AuthGuard]},
