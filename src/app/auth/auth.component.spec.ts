@@ -1,7 +1,14 @@
-import { ComponentFixture, fakeAsync, flush, TestBed, waitForAsync } from '@angular/core/testing';
+import { tick } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  fakeAsync,
+  flush,
+  TestBed,
+  waitForAsync,
+} from '@angular/core/testing';
 
 import { AuthComponent } from './auth.component';
-import {FormsModule, NgForm} from "@angular/forms";
+import { FormsModule, NgForm } from '@angular/forms';
 import { AuthResponseData, AuthService } from './auth.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -13,9 +20,7 @@ import { By } from '@angular/platform-browser';
 import { LoadingSpinnerComponent } from '../share/loading-spinner/loading-spinner.component';
 import { AlertComponent } from '../share/alert/alert.component';
 
-
-
-describe('AuthComponent', () => {
+fdescribe('AuthComponent', () => {
   let component: AuthComponent;
   let fixture: ComponentFixture<AuthComponent>;
   let el: DebugElement;
@@ -24,43 +29,48 @@ describe('AuthComponent', () => {
   const userId = 'testUserId';
   const token = 'testToken';
   let mockResponse = {
-    email : email,
-    idToken : token,
-    refreshToken : token + 'refresh',
-    expiresIn : '30',
-    localId : userId
+    email: email,
+    idToken: token,
+    refreshToken: token + 'refresh',
+    expiresIn: '30',
+    localId: userId,
   } as AuthResponseData;
 
   const router = {
-    navigate: jasmine.createSpy('navigate')
-  }
+    navigate: jasmine.createSpy('navigate'),
+  };
 
   const authService = {
-    signin(email, password){
+    signin(email, password) {
       mockResponse.email = email;
       mockResponse.idToken = 'signin';
-      return new Observable( o =>{
+      return new Observable((o) => {
         o.next(mockResponse);
       });
     },
-    signup(email, password){
+    signup(email, password) {
       mockResponse.email = email;
       mockResponse.idToken = 'signup';
-      return new Observable( o =>{
+      return new Observable((o) => {
         o.next(mockResponse);
       });
-    }
-  }
+    },
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FormsModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule ],
+      imports: [
+        FormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        BrowserAnimationsModule,
+      ],
       providers: [
-        {provide: AuthService, useValue: authService},
-        {provide: Router, useValue: router}],
-      declarations: [ AuthComponent, LoadingSpinnerComponent, AlertComponent, ]
-    })
-    .compileComponents();
+        { provide: AuthService, useValue: authService },
+        { provide: Router, useValue: router },
+      ],
+      declarations: [AuthComponent, LoadingSpinnerComponent, AlertComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -77,66 +87,62 @@ describe('AuthComponent', () => {
   });
 
   describe('check global variable', () => {
-    it('should toggle is LogginMode whenever click onSwitchMode',()=>{
+    it('should toggle is LogginMode whenever click onSwitchMode', () => {
       component.onSwitchMode();
       const mode = component.isLoginMode;
       expect(mode).toBeFalse();
     });
 
-    it('should toggle is LogginMode whenever click onSwitchMode',()=>{
+    it('should toggle is LogginMode whenever click onSwitchMode', () => {
       component.isLoginMode = false;
       component.onSwitchMode();
       const mode = component.isLoginMode;
       expect(mode).toBeTruthy();
     });
-  })
+  });
 
-  describe('check onSubmit form', () =>{
-
-    it('should navigate when user in isLogin mode with valid form', ()=>{
+  describe('check onSubmit form', () => {
+    it('should navigate when user in isLogin mode with valid form', () => {
       let testForm = <NgForm>{
         value: {
-            email: "Hello@gmail.com",
-            password: "World123"
+          email: 'Hello@gmail.com',
+          password: 'World123',
         },
         valid: true,
-        reset(){
-          this.value.email = '',
-          this.value.password = ''
-        }
+        reset() {
+          (this.value.email = ''), (this.value.password = '');
+        },
       };
       component.isLoginMode = true;
       component.onSubmit(testForm);
       expect(router.navigate).toHaveBeenCalledWith(['/phim-moi']);
-    })
-    it('should navigate when user is not in isLogin mode with valid form', ()=>{
+    });
+    it('should navigate when user is not in isLogin mode with valid form', () => {
       let testForm = <NgForm>{
         value: {
-            email: "Hello@gmail.com",
-            password: "World123"
+          email: 'Hello@gmail.com',
+          password: 'World123',
         },
         valid: true,
-        reset(){
-          this.value.email = '',
-          this.value.password = ''
-        }
+        reset() {
+          (this.value.email = ''), (this.value.password = '');
+        },
       };
       component.isLoginMode = false;
       component.onSubmit(testForm);
       expect(router.navigate).toHaveBeenCalledWith(['/phim-moi']);
-    })
+    });
 
-    it('should not navigate when user in isLogin mode with invalid form', fakeAsync(()=>{
+    it('should not navigate when user in isLogin mode with invalid form', fakeAsync(() => {
       let testFormFalse = <NgForm>{
         value: {
-            email: "Hello@gmail.com",
-            password: "World123"
+          email: 'Hello@gmail.com',
+          password: 'World123',
         },
         valid: false,
-        reset(){
-          this.value.email = '',
-          this.value.password = ''
-        }
+        reset() {
+          (this.value.email = ''), (this.value.password = '');
+        },
       };
       //before go into onsubmit, the valid of form is true, have not yet know why
 
@@ -148,10 +154,8 @@ describe('AuthComponent', () => {
       expect(router.navigate).not.toHaveBeenCalledWith(['/phim-moi']);
 
       console.log('after expect 4');
-    }))
-
-
-  })
+    }));
+  });
 
   describe('check whether the template displays correctly', () => {
     it('should display loading Component when isLoading is true', () => {
@@ -167,32 +171,34 @@ describe('AuthComponent', () => {
       expect(errorComp).toBeTruthy();
     });
 
-    it('should trigger function onSubmit when clicking btn submit', waitForAsync(() => {
-      spyOn(component, 'onSubmit');
-      const submitBtn = el.query(By.css('#submit-btn'));
-      submitBtn.triggerEventHandler('click', null);
-      fixture.detectChanges();
+    fit(
+      'should trigger function onSubmit when clicking btn submit',
+      fakeAsync(() => {
+        spyOn(component, 'onSubmit');
+        const submitBtn = el.query(By.css('#form'));
 
-      fixture.whenStable().then(() => {
+        submitBtn.triggerEventHandler('ngSubmit', {valid: true});
+        tick();
+        fixture.detectChanges();
+
+
         expect(component.onSubmit).toHaveBeenCalled();
-      });
-    }));
+      })
+    );
 
-    it('should trigger function switch when clicking btn switch', waitForAsync(() => {
-      // const componentInstance = jasmine.createSpyObj('AuthComponent', ['onSubmit', 'onSwitchMode']);
-      spyOn(component, 'onSwitchMode');
-      const switchBtn = el.query(By.css('#switch-btn'));
-      switchBtn.triggerEventHandler('click', null);
-      fixture.detectChanges();
+    it(
+      'should trigger function switch when clicking btn switch',
+      waitForAsync(() => {
+        // const componentInstance = jasmine.createSpyObj('AuthComponent', ['onSubmit', 'onSwitchMode']);
+        spyOn(component, 'onSwitchMode');
+        const switchBtn = el.query(By.css('#switch-btn'));
+        switchBtn.triggerEventHandler('click', null);
+        fixture.detectChanges();
 
-      fixture.whenStable().then(() => {
-        expect(component.onSwitchMode).toHaveBeenCalled();
-      });
-    }));
-
-
-
+        fixture.whenStable().then(() => {
+          expect(component.onSwitchMode).toHaveBeenCalled();
+        });
+      })
+    );
   });
-})
-
-
+});
