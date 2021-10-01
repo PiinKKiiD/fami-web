@@ -1,3 +1,4 @@
+
 import { tick } from '@angular/core/testing';
 import {
   ComponentFixture,
@@ -20,7 +21,8 @@ import { By } from '@angular/platform-browser';
 import { LoadingSpinnerComponent } from '../share/loading-spinner/loading-spinner.component';
 import { AlertComponent } from '../share/alert/alert.component';
 
-fdescribe('AuthComponent', () => {
+
+describe('AuthComponent', () => {
   let component: AuthComponent;
   let fixture: ComponentFixture<AuthComponent>;
   let el: DebugElement;
@@ -180,8 +182,6 @@ fdescribe('AuthComponent', () => {
         submitBtn.triggerEventHandler('ngSubmit', {valid: true});
         tick();
         fixture.detectChanges();
-
-
         expect(component.onSubmit).toHaveBeenCalled();
       })
     );

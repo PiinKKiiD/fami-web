@@ -1,4 +1,4 @@
-import {Component, ComponentFactoryResolver, OnDestroy, ViewChild} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {AuthResponseData, AuthService} from "./auth.service";
 import {Router} from "@angular/router";
 import {NgForm} from "@angular/forms";
