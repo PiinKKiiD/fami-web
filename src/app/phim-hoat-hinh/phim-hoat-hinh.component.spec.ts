@@ -2,9 +2,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PhimHoatHinhComponent } from './phim-hoat-hinh.component';
 import {FilmService} from "../share/film.service";
-import {RouterTestingModule} from "@angular/router/testing";
 import {FilmModel} from "../share/film.model";
 import {Observable, Subject} from "rxjs";
+import { ShareModule } from '../share/share.module';
+import { AppModule } from '../app.module';
 
 
 describe('PhimHoatHinhComponent', () => {
@@ -44,7 +45,7 @@ describe('PhimHoatHinhComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
+      imports: [ShareModule, AppModule],
       declarations: [ PhimHoatHinhComponent ]}).overrideComponent(PhimHoatHinhComponent,
       {
         set:{
@@ -55,14 +56,6 @@ describe('PhimHoatHinhComponent', () => {
       .compileComponents();
   });
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
-      providers: [FilmService],
-      declarations: [ PhimHoatHinhComponent ]
-    })
-    .compileComponents();
-  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(PhimHoatHinhComponent);

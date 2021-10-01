@@ -28,7 +28,7 @@ export class AddDialogComponent implements OnInit {
       0,
       this.addForm.value['filmType']
     );
-    this.filmService.addFilmToQuanLy(newFilm);
+    this.filmService.addFilmToQuanLy(newFilm).subscribe();
     this.dialogRef.close();
   }
   onCancel(){

@@ -7,15 +7,14 @@ import {
   HttpRequest
 } from "@angular/common/http";
 import {Injectable} from "@angular/core";
-import {FilmService} from "./film.service";
 import {Observable, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 
 @Injectable({providedIn: 'root'})
 export class AppInterceptorService implements HttpInterceptor{
-  constructor( private filmService: FilmService){}
+  constructor(){}
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const headers = new HttpHeaders({'Authentication' : 'davidcosta'});
+    const headers = new HttpHeaders({'Authentication' : 'fami auth'});
     const clone  = req.clone({headers: headers})
     return next.handle(req).pipe(
       catchError(this.handleError)
@@ -23,7 +22,7 @@ export class AppInterceptorService implements HttpInterceptor{
   }
 
   handleError(error: HttpErrorResponse){
-    console.log('error occurred');
+    console.log('error occurred', error);
     return throwError(error);
   }
 

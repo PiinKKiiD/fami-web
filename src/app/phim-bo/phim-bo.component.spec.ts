@@ -2,9 +2,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PhimBoComponent } from './phim-bo.component';
 import {FilmService} from "../share/film.service";
-import {RouterTestingModule} from "@angular/router/testing";
 import {Observable, Subject} from "rxjs";
 import {FilmModel} from "../share/film.model";
+import { ShareModule } from '../share/share.module';
+import { AppModule } from '../app.module';
 
 describe('PhimBoComponent', () => {
   let component: PhimBoComponent;
@@ -43,7 +44,7 @@ describe('PhimBoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
+      imports: [ShareModule, AppModule],
       declarations: [ PhimBoComponent ]}).overrideComponent(PhimBoComponent,
       {
         set:{

@@ -1,12 +1,14 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, flush, TestBed } from '@angular/core/testing';
 
 import { AddDialogComponent } from './add-dialog.component';
-import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
+import { MatDialogRef} from "@angular/material/dialog";
 import {FilmService} from "../../share/film.service";
-import {RouterTestingModule} from "@angular/router/testing";
 import {Observable, Subject} from "rxjs";
 import {FilmModel} from "../../share/film.model";
-import { FormBuilder } from "@angular/forms";
+import { QuanLyModule } from '../quan-ly.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AppModule } from 'src/app/app.module';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 describe('AddDialogComponent', () => {
   let component: AddDialogComponent;
@@ -31,11 +33,16 @@ describe('AddDialogComponent', () => {
     rate: 9,
     type: 'dump type 2',
   } as FilmModel;
-  const phimlist : FilmModel[] = [film1, film2]
+  const phimlist : FilmModel[] = [film1, film2, film1]
   const phimhots : FilmModel[] = [film2, film1];
 
   const filmService = {
     filmsChanged: new Subject<FilmModel[]>(),
+    addFilmToQuanLy(film: FilmModel){
+      return new Observable<FilmModel[]>( o => {
+        o.next(phimlist);
+      })
+    }
 
     // getPhimLeHots$(){
     //   return new Observable<FilmModel[]>( o => {o.next(phimhots); }); }
@@ -46,7 +53,7 @@ describe('AddDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MatDialogModule, RouterTestingModule],
+      imports: [QuanLyModule, BrowserAnimationsModule, MatFormFieldModule, AppModule],
       providers: [{
         provide: MatDialogRef,
         useValue: mockDialogRef
@@ -83,6 +90,17 @@ describe('AddDialogComponent', () => {
     expect(control1.valid).toBeFalsy();
     expect(control2.valid).toBeFalsy();
   });
+
+  it('should call dialofRef.close() when onCancel is trggered', () => {
+    component.onCancel();
+    expect(component.dialogRef.close).toHaveBeenCalled();
+  });
+
+  it('should call filmService.addFilmToQuanLy(newFilm) when onSubmit is triggered', fakeAsync(() => {
+    component.onSubmit();
+    flush();
+    expect(component.dialogRef.close).toHaveBeenCalled();
+  }))
 
 
 });

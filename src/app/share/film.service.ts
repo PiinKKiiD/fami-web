@@ -1,16 +1,16 @@
 import {FilmModel} from "./film.model";
-import {Observable, Subject} from "rxjs";
+import { Subject} from "rxjs";
 import {Injectable} from "@angular/core";
-import {HttpClient, HttpParams} from "@angular/common/http";
-import { map, take, tap, filter} from 'rxjs/operators';
-
+import {HttpClient} from "@angular/common/http";
+import { map, tap} from 'rxjs/operators';
+import { environment } from "src/environments/environment";
 @Injectable()
 export class FilmService{
   quanlys : FilmModel[] = [];
   constructor(private http: HttpClient) {
   }
 
-  private firebaseStoragePath = 'https://fami-film-default-rtdb.asia-southeast1.firebasedatabase.app/';
+  private firebaseStoragePath = environment.firebaseBaseUrl;
 
   filmsChanged = new Subject<FilmModel[]>();
 
@@ -74,21 +74,21 @@ export class FilmService{
     this.quanlys.push(film);
     const qlys = this.quanlys.slice();
     this.filmsChanged.next(this.quanlys.slice());
-    return this.http.put(this.firebaseStoragePath +'quanlys.json',qlys).subscribe(()=>{console.log("adding filmm")});
+    return this.http.put(this.firebaseStoragePath +'quanlys.json',qlys);
   }
 
   updateFilmToQuanLy(film: FilmModel, id: number){
     this.quanlys[id] = film;
     const qlys = this.quanlys.slice();
     this.filmsChanged.next(this.quanlys.slice());
-    return this.http.put(this.firebaseStoragePath +'quanlys.json',qlys).subscribe(()=>{console.log("editing filmm")});
+    return this.http.put(this.firebaseStoragePath +'quanlys.json',qlys);
   }
 
   delFilmFromQuanLy(index: number){
     this.quanlys.splice(index,1);
     const qlys = this.quanlys.slice();
     this.filmsChanged.next(this.quanlys.slice());
-    return this.http.put(this.firebaseStoragePath +'quanlys.json',qlys).subscribe(()=>{console.log("deleting filmm")});
+    return this.http.put(this.firebaseStoragePath +'quanlys.json',qlys);
   }
 
   getFilmFromQuanLy(index: number){

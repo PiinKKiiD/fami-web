@@ -13,20 +13,20 @@
 
   <div style="width: 150px; height: 12px;">
     <ul>
-      <li style="display: inline; margin-left: -50px;" *ngIf="starts>=1">
-        <img src="assets/images/Star_icon.png" alt="">
+      <li  style="display: inline; margin-left: -50px;" *ngIf="getRate()>=1">
+        <img class='stars' src="assets/images/Star_icon.png" alt="">
       </li>
-      <li style="display: inline;" *ngIf="getRate(film)>=2">
-        <img src="assets/images/Star_icon.png" alt="">
+      <li style="display: inline;" *ngIf="getRate()>=2">
+        <img class='stars' src="assets/images/Star_icon.png" alt="">
       </li>
-      <li style="display: inline;" *ngIf="getRate(film)>=3">
-        <img src="assets/images/Star_icon.png" alt="">
+      <li style="display: inline;" *ngIf="getRate()>=3">
+        <img class='stars' src="assets/images/Star_icon.png" alt="">
       </li>
-      <li style="display: inline;" *ngIf="getRate(film)>=4">
-        <img src="assets/images/Star_icon.png" alt="">
+      <li style="display: inline;" *ngIf="getRate()>=4">
+        <img class='stars' src="assets/images/Star_icon.png" alt="">
       </li>
-      <li style="display: inline;" *ngIf="getRate(film)>=5">
-        <img src="assets/images/Star_icon.png" alt="">
+      <li style="display: inline;" *ngIf="getRate()>=5">
+        <img class='stars' src="assets/images/Star_icon.png" alt="">
       </li>
     </ul>
   </div>
