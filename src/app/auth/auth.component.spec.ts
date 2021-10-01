@@ -1,4 +1,12 @@
-import { ComponentFixture, fakeAsync, flush, TestBed, tick, waitForAsync } from '@angular/core/testing';
+
+import { tick } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  fakeAsync,
+  flush,
+  TestBed,
+  waitForAsync,
+} from '@angular/core/testing';
 
 import { AuthComponent } from './auth.component';
 import { FormsModule, NgForm } from '@angular/forms';
@@ -12,6 +20,7 @@ import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { LoadingSpinnerComponent } from '../share/loading-spinner/loading-spinner.component';
 import { AlertComponent } from '../share/alert/alert.component';
+
 
 describe('AuthComponent', () => {
   let component: AuthComponent;
@@ -37,14 +46,14 @@ describe('AuthComponent', () => {
     signin(email, password) {
       mockResponse.email = email;
       mockResponse.idToken = 'signin';
-      return new Observable(o => {
+      return new Observable((o) => {
         o.next(mockResponse);
       });
     },
     signup(email, password) {
       mockResponse.email = email;
       mockResponse.idToken = 'signup';
-      return new Observable(o => {
+      return new Observable((o) => {
         o.next(mockResponse);
       });
     },
@@ -56,17 +65,13 @@ describe('AuthComponent', () => {
         FormsModule,
         MatFormFieldModule,
         MatInputModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
       ],
       providers: [
         { provide: AuthService, useValue: authService },
         { provide: Router, useValue: router },
       ],
-      declarations: [
-        AuthComponent,
-        LoadingSpinnerComponent,
-        AlertComponent
-      ],
+      declarations: [AuthComponent, LoadingSpinnerComponent, AlertComponent],
     }).compileComponents();
   });
 
@@ -168,12 +173,13 @@ describe('AuthComponent', () => {
       expect(errorComp).toBeTruthy();
     });
 
-    it(
+    fit(
       'should trigger function onSubmit when clicking btn submit',
       fakeAsync(() => {
         spyOn(component, 'onSubmit');
-        const submitForm = el.query(By.css('#form'));
-        submitForm.triggerEventHandler('ngSubmit', {valid: true});
+        const submitBtn = el.query(By.css('#form'));
+
+        submitBtn.triggerEventHandler('ngSubmit', {valid: true});
         tick();
         fixture.detectChanges();
         expect(component.onSubmit).toHaveBeenCalled();
