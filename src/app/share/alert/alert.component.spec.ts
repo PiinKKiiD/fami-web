@@ -42,13 +42,5 @@ describe('AlertComponent', () => {
     fixture.detectChanges();
     expect(component.onClose).toHaveBeenCalled();
   })
-
-  it('should emit nothing when onClose is called', fakeAsync(() => {
-    component.onClose();
-    flush();
-    component.close.subscribe( res => {
-      expect(res).toBeNull();
-    })
-  }))
 });
 

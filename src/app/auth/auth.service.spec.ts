@@ -76,7 +76,7 @@ describe('Auth Service', ()=>{
   });
 
   describe('handleAuthentication',()=>{
-    it('should create new user',()=>{
+    it('should create new user',fakeAsync(()=>{
       authService.signup(email,password).subscribe((authResponseData: AuthResponseData) => {
         console.log(authResponseData);
       });
@@ -85,10 +85,9 @@ describe('Auth Service', ()=>{
       expect(req.request.method).toEqual('POST');
       req.flush(mockResponse);
       expect(authService.user).not.toBe(null);
-      authService.user.subscribe(user =>{
-        expect(user.email).toEqual(email);
-      })
-    })
+      console.log('asdas:',authService.user);
+      tick(30000);
+    }))
 
     it('should logout', () => {
       authService.user.next(dumpUser);
@@ -105,9 +104,6 @@ describe('Auth Service', ()=>{
       expect(req.request.method).toEqual('POST');
       req.flush(mockResponse);
       expect(authService.user).not.toBe(null);
-      authService.user.subscribe(user =>{
-        expect(user.email).toEqual(email);
-      })
     });
 
   });
@@ -134,11 +130,11 @@ describe('Auth Service', ()=>{
       authService.user.next(dumpUser);
       console.log('expect run this first');
       authService.autoLogout(1000);
-      flush();
+      tick(1000);
       console.log('expect run this 2nd');
       expect(router.navigate).toHaveBeenCalledWith(['/auth']);
       const tempSub = authService.user.subscribe(user => {expect(user).toBeNull()});
-      flush();
+      tick(1000)
       tempSub.unsubscribe();
       console.log('expect run this 3rd');
     }));

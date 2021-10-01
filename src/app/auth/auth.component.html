@@ -1,75 +1,73 @@
 <ng-template appPlaceholder></ng-template>
-<div *ngIf="isLoading" style="text-align: center; margin-top: 130px;">
+<div *ngIf="isLoading" style="text-align: center; margin-top: 130px">
   <app-loading-spinner></app-loading-spinner>
 </div>
-<div class="row" *ngIf="!isLoading"
-     style="background-color: white;
-      color:  #484a52;
-      font-family: Roboto;
-      font-style: normal;
-      font-size: 12px;
-      width: 500px; height: 300px;
-      margin: auto;
-      margin-top: 120px;
-      border-radius: 7px;
-">
+<div
+  class="row"
+  *ngIf="!isLoading"
+  style="
+    background-color: white;
+    color: #484a52;
+    font-family: Roboto;
+    font-style: normal;
+    font-size: 12px;
+    width: 500px;
+    height: 300px;
+    margin: auto;
+    margin-top: 120px;
+    border-radius: 7px;
+  "
+>
   <div class="col-xs-12 col-md-9 col-md-offset-2">
-    <app-alert [message]="error"
-    *ngIf="error"
-    (close)="onHandleError()"></app-alert>
+    <app-alert [message]="error" *ngIf="error" (close)="onHandleError()"></app-alert>
 
     <div id="fami-film-login">Fami Film</div>
-    <form #authForm='ngForm' (ngSubmit)="onSubmit(authForm)"
-      style="margin-top: 10px;">
+    <form id="form" #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" style="margin-top: 10px">
       <div>
         <p class="input-field">
-          <mat-form-field [style.width.px]=300 appearance="legacy">
+          <mat-form-field [style.width.px]="300" appearance="legacy">
             <mat-label>User Name</mat-label>
-            <input matInput placeholder="Email@mail.com"
-                   type=text
-                   id="email"
-                   ngModel
-                   name="email"
-                   required
-            >
+            <input matInput placeholder="Email@mail.com" type="text" id="email" ngModel name="email" required />
           </mat-form-field>
         </p>
       </div>
       <div>
         <p class="input-field">
-          <mat-form-field [style.width.px]=300 appearance="standard">
+          <mat-form-field [style.width.px]="300" appearance="standard">
             <mat-label>Password</mat-label>
-            <input matInput placeholder="Password"
-                   id="password"
-                   type="password"
-                   ngModel
-                   name="password"
-                   required
-                   minlength="6"
-            >
+            <input
+              matInput
+              placeholder="Password"
+              id="password"
+              type="password"
+              ngModel
+              name="password"
+              required
+              minlength="6"
+            />
             <mat-hint>Password must contain at least 6 characters</mat-hint>
           </mat-form-field>
         </p>
       </div>
 
-      <div class="row" style="margin-top: 30px;">
+      <div class="row" style="margin-top: 30px">
         <ul>
           <li>
-            <button mat-raised-button class="blue-white-btn" id='submit-btn'
-             type="submit" [disabled]="!authForm.valid"
-            >{{isLoginMode? 'Login' : 'Sign up'}}</button></li>
+            <button mat-raised-button class="blue-white-btn" id="submit-btn" type="submit" [disabled]="!authForm.valid">
+              {{ isLoginMode ? 'Login' : 'Sign up' }}
+            </button>
+          </li>
           <li>
-            <button mat-raised-button class="blue-white-btn" id="switch-btn"
-                    (click)="onSwitchMode()"
-                    type="button">Switch to {{isLoginMode? 'Sign up' : 'Login'}}</button>
+            <button mat-raised-button class="blue-white-btn" id="switch-btn" (click)="onSwitchMode()" type="button">
+              Switch to {{ isLoginMode ? 'Sign up' : 'Login' }}
+            </button>
           </li>
         </ul>
       </div>
     </form>
     <div *ngIf="false">
-      <div class="alert alert-danger"
-           style="width: 300px; height: 10px; margin-top: 55px;">
-        <p style="text-align: center; font-size: 12px; margin-top: -10px; ">The password is invalid</p>
+      <div class="alert alert-danger" style="width: 300px; height: 10px; margin-top: 55px">
+        <p style="text-align: center; font-size: 12px; margin-top: -10px">The password is invalid</p>
       </div>
     </div>
   </div>
