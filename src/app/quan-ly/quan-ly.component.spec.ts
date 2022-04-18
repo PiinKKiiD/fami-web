@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { QuanLyComponent } from './quan-ly.component';
 import { FilmService } from '../share/film.service';
 import { MatDialog } from '@angular/material/dialog';
